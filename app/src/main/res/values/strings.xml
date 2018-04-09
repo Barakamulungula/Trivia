@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Trivia</string>
+    <string name="add_question">ADD QUESTION</string>
+    <string name="take_quiz">TAKE QUIZ</string>
+    <string name="delete_quiz">DELETE QUIZ</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
