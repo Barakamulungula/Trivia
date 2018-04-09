@@ -34,22 +34,22 @@ public class QuizFragment extends Fragment {
         return fragment;
     }
 
-    public void attachParent(CallBack callBack){
+    public void attachParent(CallBack callBack) {
         this.callBack = callBack;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_quiz, container, false);
+        View view = inflater.inflate(R.layout.fragment_quiz, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
 
 
     @OnClick(R.id.quit_quiz)
-    protected void quitQuiz(){
-        callBack.removeQuizFragment();
+    protected void quitQuiz() {
+        callBack.removeFragment(this);
     }
 
 }

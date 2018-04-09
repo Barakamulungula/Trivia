@@ -2,13 +2,15 @@ package com.example.barakamulungula.trivia;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -27,22 +29,17 @@ public class QuestionCreatorFragment extends Fragment {
     private List<Question> Questions;
     private CallBack callBack;
 
-    @BindView(R.id.question)
-    EditText questionEditview;
+    @BindView(R.id.question) EditText questionEditview;
 
-    @BindView(R.id.correct)
-    EditText correctAnswerEditview;
+    @BindView(R.id.correct) EditText correctAnswerEditview;
 
-    @BindView(R.id.wrong1)
-    EditText wrong1Editview;
+    @BindView(R.id.wrong1) EditText wrong1Editview;
 
-    @BindView(R.id.wrong2)
-    EditText wrong2Editview;
+    @BindView(R.id.wrong2) EditText wrong2Editview;
 
-    @BindView(R.id.wrong3)
-    EditText wrong3Editview;
+    @BindView(R.id.wrong3) EditText wrong3Editview;
 
-
+    @BindView(R.id.save_question) Button saveQuestion;
 
 
     public QuestionCreatorFragment() {
@@ -57,26 +54,44 @@ public class QuestionCreatorFragment extends Fragment {
         return fragment;
     }
 
-    public void attachParent(CallBack callBack){
+    public void attachParent(CallBack callBack) {
         this.callBack = callBack;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_question_creator, container, false);
-        ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.fragment_question_creator, container, false);
+        ButterKnife.bind(this, view);
         return view;
     }
-    
+
     @OnClick(R.id.cancel_question)
-    protected void cancelQuestion(){
-        callBack.removeQuestionCreatorFragment();
+    protected void cancelQuestion() {
+        callBack.makeToast("Question Canceled");
+        callBack.removeFragment(this);
     }
 
-    @OnClick(R.id.save_question) protected void saveQuestion(){
+    @OnClick(R.id.save_question)
+    protected void saveQuestion() {
 
+        String question = stringValue(questionEditview);
+        String correct = stringValue(correctAnswerEditview);
+        String wrong1 = stringValue(wrong1Editview);
+        String wrong2 = stringValue(wrong2Editview);
+        String wrong3 = stringValue(wrong3Editview);
+
+        if (!(question.isEmpty() && correct.isEmpty() && wrong1.isEmpty() && wrong2.isEmpty() && wrong3.isEmpty())) {
+            callBack.makeToast(question);
+
+        } else {
+            callBack.makeToast("All fields are required");
+        }
     }
 
+    @NonNull
+    private String stringValue(EditText s) {
+        return s.getText().toString();
+    }
 
 }

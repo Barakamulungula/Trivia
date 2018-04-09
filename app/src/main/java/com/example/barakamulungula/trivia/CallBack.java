@@ -1,9 +1,9 @@
 package com.example.barakamulungula.trivia;
 
-import android.app.Fragment;
+
+import android.support.v4.app.Fragment;
 
 public interface CallBack {
-    void removeQuizFragment();
-    void removeQuestionCreatorFragment();
+    void removeFragment(Fragment fragment);
     void makeToast(String message);
 }
