@@ -87,7 +87,6 @@
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
-        android:enabled="false"
         android:id="@+id/next_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

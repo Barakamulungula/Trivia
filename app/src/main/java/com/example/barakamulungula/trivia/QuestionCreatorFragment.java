@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,7 +81,9 @@ public class QuestionCreatorFragment extends Fragment {
         String wrong3 = stringValue(wrong3Editview);
 
         if (!(question.isEmpty() && correct.isEmpty() && wrong1.isEmpty() && wrong2.isEmpty() && wrong3.isEmpty())) {
-            callBack.makeToast(question);
+            callBack.saveQuestion(new Question(question, correct, wrong1, wrong2, wrong3));
+            callBack.removeFragment(this);
+
 
         } else {
             callBack.makeToast("All fields are required");

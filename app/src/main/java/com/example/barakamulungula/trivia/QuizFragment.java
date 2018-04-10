@@ -1,15 +1,24 @@
 package com.example.barakamulungula.trivia;
 
-
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.example.barakamulungula.trivia.MainActivity.QUESTIONS_LIST;
 
 
 /**
@@ -20,6 +29,24 @@ import butterknife.OnClick;
 public class QuizFragment extends Fragment {
 
     private CallBack callBack;
+    private List<Question> questionList;
+    private Question question;
+    private int questionIndex = 0;
+    private int correctAnswers = 0;
+    List<String> answers = new ArrayList<String>();
+
+    @BindView(R.id.question)
+    TextView questionTextView;
+    @BindView(R.id.answer1)
+    Button option1;
+    @BindView(R.id.answer2)
+    Button option2;
+    @BindView(R.id.answer3)
+    Button option3;
+    @BindView(R.id.answer4)
+    Button option4;
+    @BindView(R.id.next_question)
+    Button nextQuestion;
 
     public QuizFragment() {
         // Required empty public constructor
@@ -46,10 +73,107 @@ public class QuizFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        questionList = new ArrayList<Question>();
+        questionList = getArguments().getParcelableArrayList(QUESTIONS_LIST);
+
+        //checks if the list is empty
+        assert questionList != null;
+        Collections.shuffle(questionList);
+        populateQuiz();
+
+    }
+
+    private void populateQuiz() {
+        question = questionList.get(questionIndex);
+        questionTextView.setText(question.getQuestion());
+
+        List<Button> buttonList = new ArrayList<>();
+        buttonList.add(option1);
+        buttonList.add(option2);
+        buttonList.add(option3);
+        buttonList.add(option4);
+
+        List<String> answerChoices = new ArrayList<>();
+        answerChoices.add(question.getCorrectAnswer());
+        answerChoices.add(question.getWrong1());
+        answerChoices.add(question.getWrong2());
+        answerChoices.add(question.getWrong3());
+
+        for(Button button : buttonList) {
+            int random = (int) (Math.random() * answerChoices.size() - 1);
+            button.setText(answerChoices.get(random));
+            answerChoices.remove(random);
+        }
+    }
+
+    @SuppressLint("StringFormatMatches")
+    private void checkAnswer(String choice) {
+        disableButtons();
+        questionIndex++;
+        if (choice.toLowerCase().trim().equals(question.getCorrectAnswer().toLowerCase().trim())) {
+            questionTextView.setText(R.string.correct);
+            correctAnswers++;
+        } else {
+            questionTextView.setText(getString(R.string.wrong,question.getCorrectAnswer().toUpperCase()));
+        }
+    }
+
 
     @OnClick(R.id.quit_quiz)
     protected void quitQuiz() {
         callBack.removeFragment(this);
     }
 
+    @OnClick(R.id.next_question)
+    protected void nextQuestion() {
+        if (questionIndex < questionList.size()) {
+            enableButtons();
+            populateQuiz();
+        } else {
+            callBack.quizFinished(correctAnswers, this);
+        }
+
+    }
+
+    @OnClick(R.id.answer1)
+    protected void buttonOneClick() {
+        checkAnswer(option1.getText().toString());
+        callBack.makeToast(option1.getText().toString());
+    }
+
+    @OnClick(R.id.answer2)
+    protected void buttonTwoClick() {
+        checkAnswer(option2.getText().toString());
+        callBack.makeToast(option2.getText().toString());
+    }
+
+    @OnClick(R.id.answer3)
+    protected void buttonThreeClick() {
+        checkAnswer(option3.getText().toString());
+        callBack.makeToast(option3.getText().toString());
+    }
+
+    @OnClick(R.id.answer3)
+    protected void buttonFourClick() {
+        checkAnswer(option4.getText().toString());
+        callBack.makeToast(option4.getText().toString());
+    }
+
+    private void disableButtons() {
+        option1.setEnabled(false);
+        option2.setEnabled(false);
+        option3.setEnabled(false);
+        option4.setEnabled(false);
+    }
+
+    private void enableButtons() {
+        option1.setEnabled(true);
+        option2.setEnabled(true);
+        option3.setEnabled(true);
+        option4.setEnabled(true);
+    }
 }
+
