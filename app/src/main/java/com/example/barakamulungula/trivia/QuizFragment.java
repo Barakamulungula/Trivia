@@ -111,15 +111,13 @@ public class QuizFragment extends Fragment {
         }
     }
 
-    @SuppressLint("StringFormatMatches")
-    private void checkAnswer(String choice) {
+    private void checkAnswer(String choice, Button choiceClicked) {
         disableButtons();
         questionIndex++;
         for (Button button : buttonList) {
             if (button.getText().toString().toLowerCase().trim().equals(question.getCorrectAnswer().trim().toLowerCase())) {
+                choiceClicked.setBackgroundColor(Color.RED);
                 button.setBackgroundColor(Color.GREEN);
-            } else {
-                button.setBackgroundColor(Color.RED);
             }
         }
         if (choice.toLowerCase().trim().equals(question.getCorrectAnswer().toLowerCase().trim())) {
@@ -150,26 +148,24 @@ public class QuizFragment extends Fragment {
 
     @OnClick(R.id.answer1)
     protected void buttonOneClick() {
-        checkAnswer(option1.getText().toString());
-        callBack.makeToast(option1.getText().toString());
+        checkAnswer(option1.getText().toString(), option1);
     }
 
     @OnClick(R.id.answer2)
     protected void buttonTwoClick() {
-        checkAnswer(option2.getText().toString());
-        callBack.makeToast(option2.getText().toString());
+        checkAnswer(option2.getText().toString(), option2);
     }
 
     @OnClick(R.id.answer3)
     protected void buttonThreeClick() {
-        checkAnswer(option3.getText().toString());
-        callBack.makeToast(option3.getText().toString());
+        checkAnswer(option3.getText().toString(), option3);
+
     }
 
     @OnClick(R.id.answer4)
     protected void buttonFourClick() {
-        checkAnswer(option4.getText().toString());
-        callBack.makeToast(option4.getText().toString());
+        checkAnswer(option4.getText().toString(), option4);
+
     }
 
     private void disableButtons() {

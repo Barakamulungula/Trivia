@@ -25,7 +25,7 @@
         android:id="@+id/add_question_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="60dp"
         android:background="@android:color/transparent"
         android:text="@string/add_question"
         android:textColor="@android:color/white"
