@@ -60,14 +60,17 @@ public class MainActivity extends AppCompatActivity implements CallBack {
             bundle.putParcelableArrayList(QUESTIONS_LIST, (ArrayList<? extends Parcelable>) questionsList);
             takeQuiz.setArguments(bundle);
         } else {
-            Toast.makeText(this, "ENTER QUESTIONS", Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("You have no questions");
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
     }
 
     @OnClick(R.id.delete_quiz_button)
     protected void deleteQuiz() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if (!questionsList.isEmpty()) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("DELETE QUIZ");
             builder.setMessage("Are you sure want to delete the quiz ?").setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
@@ -84,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements CallBack {
                 }
             });
 
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }else{
+            builder.setMessage("You have no questions");
             AlertDialog dialog = builder.create();
             dialog.show();
         }
@@ -118,6 +125,26 @@ public class MainActivity extends AppCompatActivity implements CallBack {
             }
         });
         AlertDialog dialog = correctDialog.create();
+        dialog.show();
+    }
+
+    @Override
+    public void fragmentAlertDialog(String message, final Fragment fragmentToRemove) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message).setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getSupportFragmentManager().beginTransaction().remove(fragmentToRemove).commit();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
         dialog.show();
     }
 

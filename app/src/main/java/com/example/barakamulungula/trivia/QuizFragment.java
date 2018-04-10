@@ -1,6 +1,7 @@
 package com.example.barakamulungula.trivia;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -33,6 +34,7 @@ public class QuizFragment extends Fragment {
     private Question question;
     private int questionIndex = 0;
     private int correctAnswers = 0;
+    private List<Button> buttonList = new ArrayList<>();
     List<String> answers = new ArrayList<String>();
 
     @BindView(R.id.question)
@@ -90,7 +92,7 @@ public class QuizFragment extends Fragment {
         question = questionList.get(questionIndex);
         questionTextView.setText(question.getQuestion());
 
-        List<Button> buttonList = new ArrayList<>();
+        buttonList = new ArrayList<>();
         buttonList.add(option1);
         buttonList.add(option2);
         buttonList.add(option3);
@@ -102,7 +104,7 @@ public class QuizFragment extends Fragment {
         answerChoices.add(question.getWrong2());
         answerChoices.add(question.getWrong3());
 
-        for(Button button : buttonList) {
+        for (Button button : buttonList) {
             int random = (int) (Math.random() * answerChoices.size() - 1);
             button.setText(answerChoices.get(random));
             answerChoices.remove(random);
@@ -113,24 +115,32 @@ public class QuizFragment extends Fragment {
     private void checkAnswer(String choice) {
         disableButtons();
         questionIndex++;
+        for (Button button : buttonList) {
+            if (button.getText().toString().toLowerCase().trim().equals(question.getCorrectAnswer().trim().toLowerCase())) {
+                button.setBackgroundColor(Color.GREEN);
+            } else {
+                button.setBackgroundColor(Color.RED);
+            }
+        }
         if (choice.toLowerCase().trim().equals(question.getCorrectAnswer().toLowerCase().trim())) {
             questionTextView.setText(R.string.correct);
             correctAnswers++;
         } else {
-            questionTextView.setText(getString(R.string.wrong,question.getCorrectAnswer().toUpperCase()));
+            questionTextView.setText(getString(R.string.wrong, question.getCorrectAnswer().toUpperCase()));
         }
     }
 
 
     @OnClick(R.id.quit_quiz)
     protected void quitQuiz() {
-        callBack.removeFragment(this);
+        callBack.fragmentAlertDialog("Are you sure you want to quit the current quiz?", this);
     }
 
     @OnClick(R.id.next_question)
     protected void nextQuestion() {
-        if (questionIndex < questionList.size()) {
+        if (questionIndex <= questionList.size()-1) {
             enableButtons();
+            resetBackground();
             populateQuiz();
         } else {
             callBack.quizFinished(correctAnswers, this);
@@ -156,20 +166,30 @@ public class QuizFragment extends Fragment {
         callBack.makeToast(option3.getText().toString());
     }
 
-    @OnClick(R.id.answer3)
+    @OnClick(R.id.answer4)
     protected void buttonFourClick() {
         checkAnswer(option4.getText().toString());
         callBack.makeToast(option4.getText().toString());
     }
 
     private void disableButtons() {
+        nextQuestion.setEnabled(true);
         option1.setEnabled(false);
         option2.setEnabled(false);
         option3.setEnabled(false);
         option4.setEnabled(false);
     }
 
+    private void resetBackground() {
+        option1.setBackgroundColor(Color.TRANSPARENT);
+        option2.setBackgroundColor(Color.TRANSPARENT);
+        option3.setBackgroundColor(Color.TRANSPARENT);
+        option4.setBackgroundColor(Color.TRANSPARENT);
+    }
+
+
     private void enableButtons() {
+        nextQuestion.setEnabled(false);
         option1.setEnabled(true);
         option2.setEnabled(true);
         option3.setEnabled(true);

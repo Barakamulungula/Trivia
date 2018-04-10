@@ -68,7 +68,7 @@ public class QuestionCreatorFragment extends Fragment {
     @OnClick(R.id.cancel_question)
     protected void cancelQuestion() {
         callBack.makeToast("Question Canceled");
-        callBack.removeFragment(this);
+        callBack.fragmentAlertDialog("Are you sure want to cancel the question ?", this);
     }
 
     @OnClick(R.id.save_question)
@@ -82,6 +82,7 @@ public class QuestionCreatorFragment extends Fragment {
 
         if (!(question.isEmpty() && correct.isEmpty() && wrong1.isEmpty() && wrong2.isEmpty() && wrong3.isEmpty())) {
             callBack.saveQuestion(new Question(question, correct, wrong1, wrong2, wrong3));
+            callBack.makeToast("Question saved");
             callBack.removeFragment(this);
 
 

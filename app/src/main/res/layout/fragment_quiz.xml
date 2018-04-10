@@ -23,9 +23,10 @@
 
     <Button
         android:id="@+id/answer1"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Button"
+        android:layout_margin="10dp"
         android:layout_marginTop="40dp"
         android:textColor="@android:color/white"
         android:background="@android:color/transparent"
@@ -36,8 +37,9 @@
 
     <Button
         android:id="@+id/answer2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_marginTop="40dp"
         android:textColor="@android:color/white"
         android:background="@android:color/transparent"
@@ -49,8 +51,9 @@
 
     <Button
         android:id="@+id/answer3"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_marginTop="40dp"
         android:textColor="@android:color/white"
         android:background="@android:color/transparent"
@@ -62,8 +65,9 @@
 
     <Button
         android:id="@+id/answer4"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_marginTop="40dp"
         android:textColor="@android:color/white"
         android:background="@android:color/transparent"
@@ -87,6 +91,7 @@
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
+        android:enabled="false"
         android:id="@+id/next_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
