@@ -1,6 +1,5 @@
 package com.example.barakamulungula.trivia;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,14 +28,6 @@ import static com.example.barakamulungula.trivia.MainActivity.QUESTIONS_LIST;
  */
 public class QuizFragment extends Fragment {
 
-    private CallBack callBack;
-    private List<Question> questionList;
-    private Question question;
-    private int questionIndex = 0;
-    private int correctAnswers = 0;
-    private List<Button> buttonList = new ArrayList<>();
-    List<String> answers = new ArrayList<String>();
-
     @BindView(R.id.question)
     TextView questionTextView;
     @BindView(R.id.answer1)
@@ -49,6 +40,12 @@ public class QuizFragment extends Fragment {
     Button option4;
     @BindView(R.id.next_question)
     Button nextQuestion;
+    private CallBack callBack;
+    private List<Question> questionList;
+    private Question question;
+    private int questionIndex = 0;
+    private int correctAnswers = 0;
+    private List<Button> buttonList = new ArrayList<>();
 
     public QuizFragment() {
         // Required empty public constructor
@@ -86,6 +83,12 @@ public class QuizFragment extends Fragment {
         Collections.shuffle(questionList);
         populateQuiz();
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        callBack.makeToast("resume");
     }
 
     private void populateQuiz() {
@@ -136,7 +139,7 @@ public class QuizFragment extends Fragment {
 
     @OnClick(R.id.next_question)
     protected void nextQuestion() {
-        if (questionIndex <= questionList.size()-1) {
+        if (questionIndex <= questionList.size() - 1) {
             enableButtons();
             resetBackground();
             populateQuiz();

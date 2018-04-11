@@ -8,19 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,12 +21,10 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements CallBack {
 
-    private List<Question> questionsList = new ArrayList<Question>();
     public static final String QUESTIONS_LIST = "questions_list";
-
     @BindView(R.id.take_quiz_button)
     Button takeQuizButton;
-
+    private List<Question> questionsList = new ArrayList<Question>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements CallBack {
 
             AlertDialog dialog = builder.create();
             dialog.show();
-        }else{
+        } else {
             builder.setMessage("You have no questions");
             AlertDialog dialog = builder.create();
             dialog.show();
@@ -148,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements CallBack {
         builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MainActivity.this, "Question Canceled", Toast.LENGTH_SHORT).show();
                 getSupportFragmentManager().beginTransaction().remove(fragmentToRemove).commit();
             }
         });

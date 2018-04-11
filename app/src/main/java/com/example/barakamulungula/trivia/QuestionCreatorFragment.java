@@ -25,20 +25,20 @@ import butterknife.OnClick;
  */
 public class QuestionCreatorFragment extends Fragment {
 
+    @BindView(R.id.question)
+    EditText questionEditview;
+    @BindView(R.id.correct)
+    EditText correctAnswerEditview;
+    @BindView(R.id.wrong1)
+    EditText wrong1Editview;
+    @BindView(R.id.wrong2)
+    EditText wrong2Editview;
+    @BindView(R.id.wrong3)
+    EditText wrong3Editview;
+    @BindView(R.id.save_question)
+    Button saveQuestion;
     private List<Question> Questions;
     private CallBack callBack;
-
-    @BindView(R.id.question) EditText questionEditview;
-
-    @BindView(R.id.correct) EditText correctAnswerEditview;
-
-    @BindView(R.id.wrong1) EditText wrong1Editview;
-
-    @BindView(R.id.wrong2) EditText wrong2Editview;
-
-    @BindView(R.id.wrong3) EditText wrong3Editview;
-
-    @BindView(R.id.save_question) Button saveQuestion;
 
 
     public QuestionCreatorFragment() {
@@ -67,7 +67,6 @@ public class QuestionCreatorFragment extends Fragment {
 
     @OnClick(R.id.cancel_question)
     protected void cancelQuestion() {
-        callBack.makeToast("Question Canceled");
         callBack.fragmentAlertDialog("Are you sure want to cancel the question ?", this);
     }
 

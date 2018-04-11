@@ -3,30 +3,7 @@ package com.example.barakamulungula.trivia;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Question implements Parcelable{
-    private String question;
-    private String correctAnswer;
-    private String wrong1;
-    private String wrong2;
-    private String wrong3;
-
-    public Question(String question, String correctAnswer, String wrong1, String wrong2, String wrong3) {
-        this.question = question;
-        this.correctAnswer = correctAnswer;
-        this.wrong1 = wrong1;
-        this.wrong2 = wrong2;
-        this.wrong3 = wrong3;
-    }
-
-
-    protected Question(Parcel in) {
-        question = in.readString();
-        correctAnswer = in.readString();
-        wrong1 = in.readString();
-        wrong2 = in.readString();
-        wrong3 = in.readString();
-    }
-
+public class Question implements Parcelable {
     public static final Creator<Question> CREATOR = new Creator<Question>() {
         @Override
         public Question createFromParcel(Parcel in) {
@@ -38,6 +15,28 @@ public class Question implements Parcelable{
             return new Question[size];
         }
     };
+    private String question;
+    private String correctAnswer;
+    private String wrong1;
+    private String wrong2;
+    private String wrong3;
+
+
+    public Question(String question, String correctAnswer, String wrong1, String wrong2, String wrong3) {
+        this.question = question;
+        this.correctAnswer = correctAnswer;
+        this.wrong1 = wrong1;
+        this.wrong2 = wrong2;
+        this.wrong3 = wrong3;
+    }
+
+    protected Question(Parcel in) {
+        question = in.readString();
+        correctAnswer = in.readString();
+        wrong1 = in.readString();
+        wrong2 = in.readString();
+        wrong3 = in.readString();
+    }
 
     public String getQuestion() {
         return question;
