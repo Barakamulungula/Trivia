@@ -113,10 +113,10 @@ public class MainActivity extends AppCompatActivity implements CallBack {
     }
 
     @Override
-    public void quizFinished(int numCorrect, Fragment fragment) {
+    public void quizFinished(int numCorrect, int numQuestions, Fragment fragment) {
         getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         AlertDialog.Builder correctDialog = new AlertDialog.Builder(this);
-        correctDialog.setMessage(getString(R.string.correct_questions, numCorrect));
+        correctDialog.setMessage(getString(R.string.correct_questions, numCorrect, numQuestions));
         correctDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

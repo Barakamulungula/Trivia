@@ -144,7 +144,7 @@ public class QuizFragment extends Fragment {
             resetBackground();
             populateQuiz();
         } else {
-            callBack.quizFinished(correctAnswers, this);
+            callBack.quizFinished(correctAnswers,questionList.size(), this);
         }
 
     }

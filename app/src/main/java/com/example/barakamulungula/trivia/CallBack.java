@@ -10,7 +10,7 @@ public interface CallBack {
 
     void saveQuestion(Question question);
 
-    void quizFinished(int numCorrect, Fragment fragment);
+    void quizFinished(int numCorrect,int numQuestion, Fragment fragment);
 
     void fragmentAlertDialog(String message, Fragment fragmentToRemove);
 }
